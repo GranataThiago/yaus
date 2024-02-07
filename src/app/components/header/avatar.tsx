@@ -12,7 +12,7 @@ const Avatar = ({ user }: { user: User }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant={'ghost'}>
-            <Image className='rounded-full' src={user.image || 'https://source.boringavatars.com/'} alt={user.name || 'Unnamed'} width={48} height={48} />
+            <Image className='rounded-full' src={user.image ?? 'https://source.boringavatars.com/'} alt={user.name ?? 'Unnamed'} width={48} height={48} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
