@@ -22,7 +22,8 @@ const CreateLink = () => {
   
   const { mutate, isLoading } = api.link.create.useMutation({
     onSuccess: () => {
-      toast('Link Created!')
+      toast('Link Created!');
+      reset();
       router.refresh();
     },
     onError: (err) => {
@@ -36,7 +37,7 @@ const CreateLink = () => {
     formState: { errors, isValid },
     getValues,
     setValue,
-    watch,
+    reset
   } = useForm<LinkCreationForm>({
     mode: 'onChange'
   })
@@ -48,9 +49,9 @@ const CreateLink = () => {
     })    
   } 
 
-  const createRandomHash = () => {
+  const createRandomHash = async() => {
     if(!getValues().redirectUrl) return;
-    const hash = generateHash(getValues().redirectUrl);
+    const hash = await generateHash(getValues().redirectUrl);
     setValue('slug', hash);
   }
 
