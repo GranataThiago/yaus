@@ -1,6 +1,6 @@
 import { api } from '@/trpc/server'
 import React from 'react'
-import LinksList from '../shared/links-list';
+import LinksList from '../links/links-list';
 
 const LastLinks = async() => {
 

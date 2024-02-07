@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import React from 'react'
 import CreateLink from '../components/dashboard/create-link';
 import { api } from '@/trpc/server';
-import LinksList from '../components/shared/links-list';
+import LinksList from '../components/links/links-list';
 
 
 
