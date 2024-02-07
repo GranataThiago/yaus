@@ -19,8 +19,8 @@ export const linksRouter = createTRPCRouter({
     ),
     getBySlug: publicProcedure
     .input(z.object({ slug: z.string() }))
-    .query(({input, ctx}) => {
-        const foundLink = ctx.db.links.findFirst({
+    .query(async({input, ctx}) => {
+        const foundLink = await ctx.db.links.findFirst({
             where: {
                 slug: input.slug
             }
