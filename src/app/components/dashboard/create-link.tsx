@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
@@ -9,7 +9,6 @@ import { api } from '@/trpc/react';
 import { toast } from 'sonner';
 import { Sparkles } from 'lucide-react';
 import { generateHash } from '@/lib/utils';
-import { Session } from 'next-auth';
 import { useRouter } from 'next/navigation';
 
 type LinkCreationForm = {
@@ -17,39 +16,36 @@ type LinkCreationForm = {
     redirectUrl: string;
 }
 
-
-
 const CreateLink = () => {
 
   const router = useRouter();
-
+  
   const { mutate, isLoading } = api.link.create.useMutation({
-        onSuccess: () => {
-            toast('Link Created!')
-            router.refresh();
-        },
-        onError: (err) => {
-            console.log(err)
-        }
-    })
-
+    onSuccess: () => {
+      toast('Link Created!')
+      router.refresh();
+    },
+    onError: (err) => {
+      console.log(err)
+    }
+  })
+  
   const {
     handleSubmit,
     register,
-    formState,
+    formState: { errors, isValid },
     getValues,
-    setValue
-  } = useForm<LinkCreationForm>()
+    setValue,
+    watch,
+  } = useForm<LinkCreationForm>({
+    mode: 'onChange'
+  })
 
   const onLinkCreated: SubmitHandler<LinkCreationForm> = async(data) => {
-
     mutate({
         slug: data.slug,
         redirectUrl: data.redirectUrl
-    })
-
-    
-    
+    })    
   } 
 
   const createRandomHash = () => {
@@ -68,17 +64,17 @@ const CreateLink = () => {
             <div className='flex flex-col gap-2 w-full'>
                 <Label htmlFor='slug'>Final URL 😎</Label>
                 <div className='flex flex-row items-center'>
-                <p className='rounded-l-md bg-slate-200 text-black p-2'>{`${'https://yaus-two.vercel.app/'}`}</p>
-                <div className="relative flex items-center flex-1">
-                    <Button type='button' onClick={createRandomHash} className="absolute right-2 top-1/2 h-8  -translate-y-1/2 transform" >
-                        <Sparkles className="h-4 w-4" size={16}/>
-                    </Button>
-                    <Input id='slug' placeholder='slug' className='flex-1 rounded-l-none' type='text' {...register('slug', { required: true })}/>
+                  <p className='rounded-l-md bg-slate-200 text-black p-2'>{`${'https://yaus-two.vercel.app/'}`}</p>
+                  <div className="relative flex items-center flex-1">
+                      <Button type='button' onClick={createRandomHash} className="absolute right-2 top-1/2 h-8  -translate-y-1/2 transform" >
+                          <Sparkles className="h-4 w-4" size={16}/>
+                      </Button>
+                      <Input id='slug' placeholder='slug' className='flex-1 rounded-l-none' type='text' {...register('slug', { required: true, maxLength: { value: 10, message: "That don't look like a short link..." }, pattern: { value: /^[a-zA-Z0-9]+$/, message: 'Characters not allowed' } })}/>
+                  </div>
                 </div>
-
-                </div>
+                <span className='text-red-500 min-h-8'> {errors.slug?.message} </span>
             </div>
-            <Button variant={'default'} type='submit' className='p-4 place-self-end disabled:bg-secondary' disabled={isLoading}> Create </Button>
+            <Button variant={'default'} type='submit' className='p-4 place-self-end disabled:bg-secondary' disabled={isLoading || !isValid}> Create </Button>
         </form>
     </div>
   )
