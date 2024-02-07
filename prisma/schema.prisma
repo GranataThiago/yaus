@@ -68,3 +68,15 @@ model VerificationToken {
 
     @@unique([identifier, token])
 }
+
+
+// YAUS
+
+model Links{
+    slug String @id @unique
+    redirectUrl String
+    authorId String
+    createdAt DateTime @default(now())
+
+    @@index([authorId])
+}
