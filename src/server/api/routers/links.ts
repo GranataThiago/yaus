@@ -1,7 +1,14 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
+const ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(5, "5 m"),
+    analytics: true,
+  });
 
 export const linksRouter = createTRPCRouter({
     getLast: publicProcedure
@@ -38,11 +45,17 @@ export const linksRouter = createTRPCRouter({
         redirectUrl: z.string().url(),
     }))
     .mutation(async({input, ctx}) => {
+        const authorId = ctx.session.user.id; 
+
+        const { success } = await ratelimit.limit(authorId);
+
+        if(!success) throw new TRPCError({code: "TOO_MANY_REQUESTS"});
+
         await ctx.db.links.create({
             data: {
                 slug: input.slug,
                 redirectUrl: input.redirectUrl,
-                authorId: ctx.session.user.id
+                authorId
             }
         })
     }),
