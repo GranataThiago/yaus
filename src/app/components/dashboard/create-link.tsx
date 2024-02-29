@@ -21,12 +21,23 @@ const CreateLink = () => {
   const router = useRouter();
   
   const { mutate, isLoading } = api.link.create.useMutation({
-    onSuccess: () => {
-      toast('Link Created!');
+    onSuccess: (data, variables) => {
+      toast.success('Link Created!', {
+        position: 'bottom-center',
+        action: {
+          label: 'Copy',
+          onClick: () => {
+            navigator.clipboard.writeText(`https://yausr.vercel.app/${variables.slug}`)
+          }
+        }
+      });
       reset();
       router.refresh();
     },
     onError: (err, newLink, ctx) => {
+      toast.error('Ooops, failed to shorten link!', {
+        position: 'bottom-center'
+      });
       console.log(err)
     }
   })
@@ -65,7 +76,7 @@ const CreateLink = () => {
             <div className='flex flex-col gap-2 w-full'>
                 <Label htmlFor='slug'>Final URL 😎</Label>
                 <div className='flex flex-row items-center'>
-                  <p className='rounded-l-md bg-slate-200 text-black p-2'>{`${'https://yaus-two.vercel.app/'}`}</p>
+                  <p className='rounded-l-md bg-slate-200 text-black p-2'>{`${'https://yausr.vercel.app/'}`}</p>
                   <div className="relative flex items-center flex-1">
                       <Button type='button' onClick={createRandomHash} className="absolute right-2 top-1/2 h-8  -translate-y-1/2 transform" >
                           <Sparkles className="h-4 w-4" size={16}/>
