@@ -26,7 +26,7 @@ const CreateLink = () => {
       reset();
       router.refresh();
     },
-    onError: (err) => {
+    onError: (err, newLink, ctx) => {
       console.log(err)
     }
   })
@@ -70,7 +70,7 @@ const CreateLink = () => {
                       <Button type='button' onClick={createRandomHash} className="absolute right-2 top-1/2 h-8  -translate-y-1/2 transform" >
                           <Sparkles className="h-4 w-4" size={16}/>
                       </Button>
-                      <Input id='slug' placeholder='slug' className='flex-1 rounded-l-none' type='text' {...register('slug', { required: true, maxLength: { value: 10, message: "That don't look like a short link..." }, pattern: { value: /^[a-zA-Z0-9]+$/, message: 'Characters not allowed' } })}/>
+                      <Input id='slug' placeholder='slug' className='flex-1 rounded-l-none' type='text' {...register('slug', { required: true, maxLength: { value: 10, message: "That don't look like a short link..." }, pattern: { value: /^[a-zA-Z0-9-]+$/, message: 'Characters not allowed' } })}/>
                   </div>
                 </div>
                 <span className='text-red-500 min-h-8'> {errors.slug?.message} </span>
