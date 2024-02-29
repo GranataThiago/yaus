@@ -5,6 +5,9 @@ export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
+      screens: {
+        xs: '480px' 
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },

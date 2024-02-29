@@ -22,7 +22,7 @@ export default async function Page() {
 
             <p className='pt-8 font-extrabold text-3xl'>Your links</p>
             <hr className='my-2'/>
-            <LinksList className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4' links={links}/>
+            <LinksList className='grid grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4' links={links}/>
         </main>
     )
 }
