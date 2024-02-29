@@ -76,7 +76,7 @@ const CreateLink = () => {
             <div className='flex flex-col gap-2 w-full'>
                 <Label htmlFor='slug'>Final URL 😎</Label>
                 <div className='flex flex-row items-center'>
-                  <p className='rounded-l-md bg-slate-200 text-black p-2'>{`${'https://yausr.vercel.app/'}`}</p>
+                  <p className='rounded-l-md bg-slate-200 text-black p-2 hidden md:flex'>{`${'https://yausr.vercel.app/'}`}</p>
                   <div className="relative flex items-center flex-1">
                       <Button type='button' onClick={createRandomHash} className="absolute right-2 top-1/2 h-8  -translate-y-1/2 transform" >
                           <Sparkles className="h-4 w-4" size={16}/>

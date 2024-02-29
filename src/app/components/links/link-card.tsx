@@ -14,7 +14,7 @@ const LinkCard = async({ link }: LinkCardProps) => {
   const session = await getServerAuthSession();
 
   return (
-    <div className='bg-gradient-to-br from-white to-transparent rounded-lg w-56 p-[2px] shadow-xl shadow-black/10'>
+    <div className='bg-gradient-to-br from-white to-transparent rounded-lg p-[2px] shadow-xl shadow-black/10'>
       <div className='bg-gradient-to-br from-primary to-white rounded-lg w-full h-full px-4 py-8 grid place-content-center gap-4'>
           <header className='flex justify-between items-center'>
               <p className='font-bold'>/{link.slug}</p>
