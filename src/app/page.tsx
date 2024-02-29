@@ -1,10 +1,7 @@
 
-import { getServerAuthSession } from "@/server/auth";
 import LastLinks from "./components/home/last-links";
 
 export default async function Home() {
-  const session = await getServerAuthSession();
-
   return (
     <main className="w-3/4 mx-auto text-center flex flex-col items-center justify-start text-black relative h-[calc(100dvh-72px)] overflow-y-hidden">
       <h1 className="text-4xl md:text-5xl xl:text-6xl  font-extrabold tracking-tight mt-20">
