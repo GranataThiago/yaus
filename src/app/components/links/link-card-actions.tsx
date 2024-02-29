@@ -29,14 +29,15 @@ const LinkCardActions = ({ link }: { link: Link }) => {
 
     const copyLink = async() => {
         await navigator.clipboard.writeText(`https://yausr.vercel.app/${link.slug}`);
+        toast.success('Link copied!', { position: 'bottom-center' })
     }
 
     return (
-    <div>
-        <Button variant={'ghost'} onClick={copyLink}>
+    <div className='flex flex-row gap-0'>
+        <Button className='p-1' variant={'ghost'} onClick={copyLink}>
             <Copy size={20}/>
         </Button>
-        <Button variant={'ghost'} onClick={deleteLink}>
+        <Button className='p-1' variant={'ghost'} onClick={deleteLink}>
             <Trash size={20}/>
         </Button>
     </div>
