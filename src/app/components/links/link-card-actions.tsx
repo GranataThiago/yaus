@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { Button } from '../ui/button'
-import { Trash } from 'lucide-react'
+import { Copy, Trash } from 'lucide-react'
 import { RouterOutputs } from '@/trpc/shared'
 import { api } from '@/trpc/react';
 import { toast } from 'sonner'
@@ -27,12 +27,19 @@ const LinkCardActions = ({ link }: { link: Link }) => {
         mutate({ slug: link.slug })
     }
 
+    const copyLink = async() => {
+        await navigator.clipboard.writeText(`https://yausr.vercel.app/${link.slug}`);
+    }
+
     return (
-    <>
-    <Button variant={'ghost'} onClick={deleteLink}>
-        <Trash size={20}/>
-    </Button>
-    </>
+    <div>
+        <Button variant={'ghost'} onClick={copyLink}>
+            <Copy size={20}/>
+        </Button>
+        <Button variant={'ghost'} onClick={deleteLink}>
+            <Trash size={20}/>
+        </Button>
+    </div>
     )
 }
 

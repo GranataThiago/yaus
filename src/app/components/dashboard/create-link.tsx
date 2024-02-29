@@ -26,8 +26,8 @@ const CreateLink = () => {
         position: 'bottom-center',
         action: {
           label: 'Copy',
-          onClick: () => {
-            navigator.clipboard.writeText(`https://yausr.vercel.app/${variables.slug}`)
+          onClick: async() => {
+            await navigator.clipboard.writeText(`https://yausr.vercel.app/${variables.slug}`)
           }
         }
       });
